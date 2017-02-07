@@ -1,27 +1,31 @@
 import React from 'react';
-import { Router, Route, Link, hashHistory } from 'react-router';
+import { Router, Route, Link, IndexRoute, hashHistory } from 'react-router';
 
-const Home = (props) => <div><h1>Home</h1><Links />{props.children}</div>;
-const About = (props) => <div><h1>About</h1><Links />{props.children}</div>;
-const Contact = () => <div><h1>Contact</h1><Links /></div>;
+const Outer = (props) => <div><h1>Our Site</h1><Links />{props.children}</div>;
+const About = () => <div><h1>About</h1></div>;
+const Contact = () => <div><h1>Contact</h1></div>;
+
+
 const Links = () =>
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/about/contact">Contact</Link>
-    </nav>
+  <nav>
+    <Link to="/">Home</Link>
+    <Link to="/about">About</Link>
+    <Link to="/contact">Contact</Link>
+  </nav>
 
 
-const App = () => {
-  return (
-    <Router history={ hashHistory }>
-      <Route path="/" component={Home}>
-      	<Route path="about" component={About}>
-      		<Route path="contact" component={Contact}></Route>
-      	</Route>
-      </Route>
-    </Router>
-  )
-};
+class App extends React.Component {
+  render(){
+    return (
+      <Router history={ hashHistory }>
+        <Route path="/" component={Outer}>
+          <IndexRoute component={About}></IndexRoute>
+          <Route path="contact" component={Contact}></Route>
+        </Route>
+
+      </Router>
+    );
+  }
+}
 
 export default App;
